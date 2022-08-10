@@ -2,34 +2,47 @@
   "pages": [{
     "path": "pages/home/home",
     "style": {
-      
+
     }
 
   }, {
     "path": "pages/cate/cate",
     "style": {
-      
+
     }
 
   }, {
     "path": "pages/cart/cart",
     "style": {
-      
+
     }
 
   }, {
     "path": "pages/my/my",
     "style": {
-     
+
     }
 
   }],
+  "subPackages": [{ //一个对象就是一个分包
+      "root": "subpkg", //指定根目录
+      "pages": [{
+        "path": "goods_detail/goods_detail",
+        "style": {}
+      }, {
+        "path": "goods_list/goods_list",
+        "style": {}
+
+      }] //表示分包下有多少个页面  
+    }
+
+  ],
   "globalStyle": {
     "navigationBarTextStyle": "white",
     "navigationBarTitleText": "黑马优购",
     "navigationBarBackgroundColor": "#C00000",
     "backgroundColor": "#FFFFFF"
-    
+
   },
   "tabBar": {
     "selectedColor": "#C00000",
