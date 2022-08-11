@@ -33,6 +33,10 @@
         "path": "goods_list/goods_list",
         "style": {}
 
+      }, {
+        "path": "search/search",
+        "style": {}
+
       }] //表示分包下有多少个页面  
     }
 

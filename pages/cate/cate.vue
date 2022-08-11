@@ -1,5 +1,10 @@
 <template>
   <view>
+   <!-- 使用自定义组件-->
+   <!-- 给组件自定义绑定了属性 这样就可以动态修改搜索框的背景颜色和边框大小 不设置既用默认值-->
+   <!-- <my-search :bgcolor="'#000000'" :radius=""></my-search> -->
+   <!-- 这样直接给组件绑定click事件是无效的 因为组件默认是没有绑定点击事件的-->
+   <my-search @click="gotoSearch"></my-search>
     <view class="scroll-view-container">
       <!-- 左侧的滑动区-->
       <scroll-view scroll-y="true" class="left-scroll-view" :style="{height:wh+'px'}">
@@ -57,7 +62,7 @@
     },
     onLoad() {
       const sysInfo = uni.getSystemInfoSync() //用来获取手机的参数 同步手机的高度 详情间uni-app官网 API 设备
-      this.wh = sysInfo.windowHeight
+      this.wh = sysInfo.windowHeight-50 
       // 调用获取分类列表数据的方法
       this.getCateList()
     },
@@ -89,6 +94,12 @@
         uni.navigateTo({
           url:'/subpkg/goods_list/goods_list?cid='+item3.cat_id
         })
+      },
+        //定义点击搜索的处理方法
+      gotoSearch(){
+      uni.navigateTo({
+        url:'/subpkg/search/search'
+      })
       }
     }
   }

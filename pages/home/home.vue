@@ -1,5 +1,10 @@
 <template>
   <view>
+
+    <!-- 使用自定义的搜索组件 -->
+    <view class="search-box">
+      <my-search @click="gotoSearch"></my-search>
+    </view>
     <!-- 轮播图区域   输入uSwiper会出来轮播图的框架-->
     <swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000" :circular="true">
 
@@ -29,11 +34,12 @@
               mode="widthFix"></image>
 
           </navigator>
-          <!-- 右侧四个小图片的盒子-->  
+          <!-- 右侧四个小图片的盒子-->
           <view class="right-img-box">
-            <navigator class="right-img-item" v-for="(item2,i2) in item.product_list" :key="i2" v-if="i2!==0" :url="item2.url">
+            <navigator class="right-img-item" v-for="(item2,i2) in item.product_list" :key="i2" v-if="i2!==0"
+              :url="item2.url">
               <image :src="item2.image_src" :style="{width: item2.image_width + 'rpx'}" mode="widthFix"></image>
-              
+
             </navigator>
 
           </view>
@@ -108,15 +114,22 @@
         //请求失败
         if (res.meta.status !== 200) return uni.$showMsg()
         //对数据进行处理  要处理的原因就是商品信息的url和包的路径不一样 所以要和goods_list路径拼接起来
-        res.message.forEach(floor =>{//这一个是拿到楼层
-          floor.product_list.forEach(prod =>{//prod就是商品的信息 prod指向的就是每个图片的信息对象
-          prod.url='/subpkg/goods_list/goods_list?'+prod.navigator_url.split('?')[1]//以?进行分割 所以为1的就是要拼接上去的数据项
+        res.message.forEach(floor => { //这一个是拿到楼层
+          floor.product_list.forEach(prod => { //prod就是商品的信息 prod指向的就是每个图片的信息对象
+            prod.url = '/subpkg/goods_list/goods_list?' + prod.navigator_url.split('?')[
+              1] //以?进行分割 索引为1的就是要拼接上去的数据项
           })
         })
         this.floorList = res.message
         //uni.$showMsg('数据请求成功')
 
       },
+      //定义点击搜索后的处理方法
+      gotoSearch() {
+        uni.navigateTo({
+          url: '/subpkg/search/search'
+        })
+      }
 
     }
 
@@ -153,15 +166,28 @@
     width: 100%;
     display: flex;
   }
+
   /* 楼层内图片样式*/
   .right-img-box {
     display: flex;
-    flex-wrap: wrap;/* 横向对齐 */
-    justify-content: space-around;/* 分散对齐 */
+    flex-wrap: wrap;
+    /* 横向对齐 */
+    justify-content: space-around;
+    /* 分散对齐 */
   }
-  
+
   .floor-img-box {
     display: flex;
     padding-left: 10rpx;
+  }
+
+  //实现吸顶效果
+  .search-box {
+    // 设置定位效果为“吸顶”
+    position: sticky;
+    // 吸顶的“位置”  
+    top: 0;
+    // 提高层级，防止被轮播图覆盖
+    z-index: 999;
   }
 </style>
